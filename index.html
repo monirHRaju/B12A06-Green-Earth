@@ -16,6 +16,55 @@
 
 </head>
 <body class="font-bold inter-font">
-    <h1 class="text-3xl">Welcome to New Website</h1>
+    <!-- header section -->
+     <header>
+        <div class="navbar bg-[#15803d] text-white shadow-sm px-[135px]">
+            <div class="navbar-start">
+                <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+                </div>
+                <ul
+                    tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li><a>About</a></li>
+                    <li><a>Gallery</a></li>
+                    <li><a>Plant a Tree</a></li>
+                </ul>
+                </div>
+                <a class="btn btn-ghost text-xl">Green Earth</a>
+            </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                <li><a>About</a></li>
+                <li><a>Gallery</a></li>
+                <li><a>Plant a Tree</a></li>
+                </ul>
+            </div>
+            <div class="navbar-end">
+                <a class="btn bg-[#facc15] text- rounded-3xl">Plant a Tree</a>
+            </div>
+        </div>
+     </header>
+
+     <!-- banner section -->
+
+    <section class="h-[383px] mx-auto bg-[#cff0dc] text-center relative bg-[url('./assets/hero-leaf1.png')] bg-no-repeat bg-contain">
+        <div class="mx-auto relative z-10">
+            <h1 class="text-5xl text-[#1f2937] font-bold pt-[100px]">
+                Plant a Tree, Grow a Future
+            </h1>
+            <p class="mt-2 mb-6 text-[#1f2937]">
+                Join our mission to plant 1 million trees and make the Earth greener for future <br> generations.
+            </p>
+            <button class="btn bg-[#facc15] rounded-3xl">Get Involved</button>
+        </div>
+        <!-- right image -->
+        <img src="./assets/hero-leaf2.png" class="absolute right-0 bottom-0 z-0" alt="">
+    </section>
+    <main>
+
+    </main>
+
 </body>
 </html>
