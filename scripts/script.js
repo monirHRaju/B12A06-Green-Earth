@@ -1,3 +1,31 @@
+// reusable functions
+function getValue(id){
+    const value = document.getElementById(id).value;
+    
+    return value;
+}
+function getValueNumber(id){
+    const value = document.getElementById(id).value;
+    const valueNumber = parseInt(value);
+
+    return valueNumber;
+}
+function getInnerTextNumber(id){
+    const innerText = document.getElementById(id).innerText;
+    const innerTextNumber = parseInt(innerText);
+
+    return innerTextNumber;
+}
+function getElement(id){
+    const element = document.getElementById(id)
+    return element;
+}
+
+function getElements(className){
+    const elements = document.getElementsByClassName(className)
+    return elements;
+}
+
 // fetch all plants
 const allPlants = () => {
     const url = 'https://openapi.programming-hero.com/api/plants'
@@ -14,6 +42,74 @@ const allCategories = () => {
     .then((json) => displayCategories(json.categories))
     
 }
+// fetch plant by id
+const addToCart = (id) => {
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`
+    const result = fetch(url)
+    .then((res)=> res.json())
+    .then((json) => showToCart(json.plants))
+    
+}
+const removeCartItem = (id) => {
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`
+    const result = fetch(url)
+    .then((res)=> res.json())
+    .then((json) => deleteFromCart(json.plants))
+}
+
+const deleteFromCart = (item) => {
+    // const cartContainer = getElement('cart-container')
+    const cartItem = getElement(`cart-item-${item.id}`)
+    cartItem.remove()
+
+    const totalCartPrice = getInnerTextNumber('total-cart-price-container');
+    console.log(totalCartPrice)
+
+    const newCartTotal = totalCartPrice - item.price;
+    
+    setNewCartTotal(newCartTotal)
+    
+}
+
+// {
+//     "id": 25,
+//     "image": "https://i.ibb.co.com/svtZJ7nw/money-plant-min.jpg",
+//     "name": "Money Plant",
+//     "description": "A popular indoor climber believed to bring prosperity. Thrives easily in soil or water with minimal care.",
+//     "category": "Climber",
+//     "price": 350
+// }
+const showToCart = (plant) => {
+    // console.log(plant)
+    const totalCartPrice = getInnerTextNumber('total-cart-price-container');
+    console.log(totalCartPrice)
+    const cartContainer = getElement('cart-container')
+    const div = document.createElement('div')
+    
+    div.innerHTML = `
+        <div class="flex justify-between items-center bg-[#f0fdf4] p-3 rounded-xl mb-2">
+            <div>
+                <h2 class="text-[14px] text-black mb-2 font-semibold">${plant.name}</h2>
+                <h3 class="text-[16px] text-gray-400">৳ <span id="price">${plant.price}</span> x <span id="quantity">1</span></h3>
+            </div>
+            <div id="remove-cart-item-${plant.id}" onClick="removeCartItem(${plant.id})" class="btn btn-outline border-none text-[16px] text-gray-400">x</div>
+        </div>
+    `
+    div.setAttribute('id', `cart-item-${plant.id}`)
+    cartContainer.appendChild(div)
+    //cart calculation
+
+    const newCartTotal = totalCartPrice + plant.price;
+    
+    setNewCartTotal(newCartTotal)
+    // totalCartPrice.innerText = newCartTotal;
+}
+
+const setNewCartTotal = (total) => {
+    const cartTotal = getElement('total-cart-price-container')
+    cartTotal.innerText = total;
+    console.log(total)
+}
 
 // {
 //     "id": 1,
@@ -25,14 +121,19 @@ const displayCategories = (categories) => {
 
     for(const category of categories){ 
         // console.log(category)
-        const ul = document.createElement('ul');
+        const li = document.createElement('li');
+        li.classList.add('category-btn', 'bg-none', 'w-full', 'text-[#1f2937]', 'p-3')
         // console.log(ul);
-        ul.innerHTML = `
-            <li id="category-id-${category.id}" onClick="loadPlants(${category.id})" class="category-btn bg-none w-full text-[#1f2937] p-3">${category.category_name}</li>
-        `
+        li.innerText = category.category_name; 
+
+        li.setAttribute('id','category-id-'+category.id)
+        li.setAttribute('onClick', `loadPlants(${category.id})`)
+        // `
+        //     <li id="category-id-${category.id}" onClick="loadPlants(${category.id})" class="category-btn bg-none w-full text-[#1f2937] p-3">${category.category_name}</li>
+        // `
         
         // console.log(category)
-        categoryContainer.appendChild(ul)
+        categoryContainer.appendChild(li)
     }
 }
 
@@ -105,7 +206,7 @@ const displayPlants = (plants) => {
                         <h3 class="font-semibold">৳ <span id="price">${plant.price}</p></span></h3>
                     </div>
                     
-                    <button class="btn bg-[#15803d] text-white text-[12px] rounded-full w-full py-2 mt-4">Add to Cart</button>
+                    <button onClick="addToCart(${plant.id})" class="btn bg-[#15803d] text-white text-[12px] rounded-full w-full py-2 mt-4">Add to Cart</button>
 
                 </div>
             </div>
@@ -139,14 +240,14 @@ const displayPlantDetails = (plant) => {
     console.log(plant)
     const detailsContainer =document.getElementById('details-container');
     detailsContainer.innerHTML = `
-         <div>
-            <h2 class="text-2xl font-bold">${plant.name}</h2>
-            <p>${plant.name}</p>
-            <p>${plant.details}</p>  
-        </div>
-        <div>
-            <h2 class="text-2xl">Synonyms</h2>
-            
+         <div class="">
+            <h2 class="text-2xl font-bold mb-3">${plant.name}</h2>
+            <figure class="">
+                <img src="${plant.image}" alt="fruit" class="w-[500px] h-[250px] mb-3 rounded-lg" />
+            </figure>
+            <p class="mb-3"><span class="font-semibold">Category: </span>${plant.category}</p>  
+            <p class="mb-3"><span class="font-semibold">Price: </span>${plant.price}</p>  
+            <p class="mb-3"><span class="font-semibold">Description: </span>${plant.description}</p>  
         </div>
     `
     document.getElementById('plant_modal').showModal();

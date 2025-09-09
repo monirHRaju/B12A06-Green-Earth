@@ -65,19 +65,21 @@
     <main>
         <section class="product-section bg-[#f0fdf4] ">
             <h1 class="text-3xl text-center font-semibold pt-[100px] pb-[40px]">Choose Your Trees</h1>
-            <div class="flex  flex-row gap-4 w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row gap-4 ms:w-[1440px] mx-auto">
                 <div class="category-section basis-2/12">
                     <h2 class="text-[20px] font-semibold mb-4">Categories</h2>
-                    <div id="category-container">
-                        
-                    </ul>
+                    <div >
+                        <ul id="category-container">
+
+                        </ul>
+                    
                     </div>
                     
                 
                 </div>
                 <div class="product-card-section basis-8/12">
 
-                    <div id="plant-container" class="grid grid-cols-3 gap-5">
+                    <div id="plant-container" class="grid md:grid-cols-3 gap-5">
                         
                        <!-- product cards will display here  -->
                        
@@ -86,31 +88,16 @@
                     
 
                 </div>
-                <div class="cart-section basis-2/12 bg-white p-2">
+                <div class="cart-container basis-2/12 bg-white p-2" id="">
                     <h1 class="text-2xl mb-3">Your Cart</h1>
                     <!-- cart item -->
-                    <div class="flex justify-between items-center bg-[#f0fdf4] p-3 rounded-xl mb-2">
-                        <div>
-                            <h2 class="text-[14px] text-black mb-2 font-semibold">Mango Tree</h2>
-                            <h3 class="text-[16px] text-gray-400">৳ <span id="price">500</span> x <span id="quantity">1</span></h3>
-                        </div>
-                        <div class="btn btn-outline border-none text-[16px] text-gray-400">x</div>
+                    <div id="cart-container">
+                        <!-- cart item will now here -->
                     </div>
-                    
-
-               
-                    <div class="flex justify-between items-center bg-[#f0fdf4] p-3 rounded-xl mb-3">
-                        <div>
-                            <h2 class="text-[14px] text-black mb-2 font-semibold">Mango Tree</h2>
-                            <h3 class="text-[16px] text-gray-400">৳ <span id="price">500</span> x <span id="quantity">1</span></h3>
-                        </div>
-                        <div class="btn btn-outline border-none text-[16px] text-gray-400">x</div>
-                    </div>
-
                     <hr class="border-gray-300">
                     <div id="total-container" class="flex justify-between mx-3 my-2">
                         <h2>Total:</h2>
-                        <h2>৳ <span id="gross-total">500</span></h2>
+                        <h2>৳ <span id="total-cart-price-container">0</span></h2>
                     </div>
 
                 </div>
