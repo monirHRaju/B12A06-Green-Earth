@@ -82,7 +82,7 @@ const deleteFromCart = (item) => {
 const showToCart = (plant) => {
     // console.log(plant)
     const totalCartPrice = getInnerTextNumber('total-cart-price-container');
-    console.log(totalCartPrice)
+    // console.log(totalCartPrice)
     const cartContainer = getElement('cart-container')
     const div = document.createElement('div')
     
@@ -92,12 +92,13 @@ const showToCart = (plant) => {
                 <h2 class="text-[14px] text-black mb-2 font-semibold">${plant.name}</h2>
                 <h3 class="text-[16px] text-gray-400">৳ <span id="price">${plant.price}</span> x <span id="quantity">1</span></h3>
             </div>
-            <div id="remove-cart-item-${plant.id}" onClick="removeCartItem(${plant.id})" class="btn btn-outline border-none text-[16px] text-gray-400">x</div>
+            <div id="remove-cart-item-${plant.id}" onClick="removeCartItem(${plant.id})" class="btn font-semibold btn-outline border-none text-[18px] text-red-700">X</div>
         </div>
     `
     div.setAttribute('id', `cart-item-${plant.id}`)
     cartContainer.appendChild(div)
     //cart calculation
+    alert(`${plant.name} has been added to cart.`)
 
     const newCartTotal = totalCartPrice + plant.price;
     
@@ -122,7 +123,7 @@ const displayCategories = (categories) => {
     for(const category of categories){ 
         // console.log(category)
         const li = document.createElement('li');
-        li.classList.add('category-btn', 'bg-none', 'w-full', 'text-[#1f2937]', 'p-3')
+        li.classList.add('category-btn', 'bg-none', 'w-full', 'text-[#1f2937]', 'p-3', 'bg-green-100', 'md:bg-[#f0fdf4]', 'hover:bg-green-400', 'hover:text-white')
         // console.log(ul);
         li.innerText = category.category_name; 
 
@@ -185,40 +186,77 @@ const removeActive = () => {
 // }
 
 
-const displayPlants = (plants) => {
-    const plantContainer = document.getElementById('plant-container')
-    plantContainer.innerHTML = '';
-
-    plants.forEach((plant) => {
-        const div = document.createElement('div')
-        div.innerHTML = `
-            <div class="card bg-base-100 w-70 h-100 shadow-sm p-4">
-                <figure class="h-[180px]">
-                    <img
-                    src="${plant.image}"
-                    alt="fruit" />
-                </figure>
-                <div class="mt-3">
-                    <h2 onClick="productDetails(${plant.id})" class="font-semibold">${plant.name}</h2>
-                    <p class="text-[12px] text-[#1f2937] my-2">${plant.description}</p>
-                    <div class="card-actions flex justify-between items-center"> 
-                        <button class="btn bg-[#dcfce7] text-[#15803D] rounded-full">${plant.category}</p></button>
-                        <h3 class="font-semibold">৳ <span id="price">${plant.price}</p></span></h3>
-                    </div>
+// const displayPlants = (plants) => {
+//     const plantContainer = document.getElementById('plant-container')
+//     plantContainer.innerHTML = '';
+//     setTimeout(() => {
+//         plants.forEach((plant) => {
+//         const div = document.createElement('div')
+//         div.innerHTML = `
+//             <div class="card bg-base-100 h-100 shadow-sm p-4">
+//                 <figure class="h-[180px]">
+//                     <img
+//                     src="${plant.image}"
+//                     alt="fruit" />
+//                 </figure>
+//                 <div class="mt-3">
+//                     <h2 onClick="productDetails(${plant.id})" class="font-semibold">${plant.name}</h2>
+//                     <p class="text-[12px] text-[#1f2937] my-2">${plant.description}</p>
+//                     <div class="card-actions flex justify-between items-center"> 
+//                         <button class="btn bg-[#dcfce7] text-[#15803D] rounded-full">${plant.category}</p></button>
+//                         <h3 class="font-semibold">৳ <span id="price">${plant.price}</p></span></h3>
+//                     </div>
                     
-                    <button onClick="addToCart(${plant.id})" class="btn bg-[#15803d] text-white text-[12px] rounded-full w-full py-2 mt-4">Add to Cart</button>
+//                     <button onClick="addToCart(${plant.id})" class="btn bg-[#15803d] text-white text-[12px] rounded-full w-full py-2 mt-4">Add to Cart</button>
 
-                </div>
-            </div>
+//                 </div>
+//             </div>
         
-        `
-        plantContainer.appendChild(div);
-    });
+//         `
+//         plantContainer.appendChild(div);
+//     });
 
+        
+//     }, 1000);
+    
     
 
-}
+// }
+const displayPlants = (plants) => {
+    const plantContainer = document.getElementById('plant-container');
+    const spinner = document.getElementById('spinner');
 
+    spinner.classList.remove('hidden');
+
+    plantContainer.innerHTML = '';
+
+    
+    setTimeout(() => {
+        plants.forEach((plant) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="card bg-base-100 h-100 shadow-sm p-4">
+                    <figure class="h-[180px]">
+                        <img src="${plant.image}" alt="fruit" />
+                    </figure>
+                    <div class="mt-3">
+                        <h2 onClick="productDetails(${plant.id})" class="font-semibold">${plant.name}</h2>
+                        <p class="text-[12px] text-[#1f2937] my-2">${plant.description}</p>
+                        <div class="card-actions flex justify-between items-center"> 
+                            <button class="btn bg-[#dcfce7] text-[#15803D] rounded-full">${plant.category}</button>
+                            <h3 class="font-semibold">৳ <span>${plant.price}</span></h3>
+                        </div>
+                        <button onClick="addToCart(${plant.id})" class="btn bg-[#15803d] text-white text-[12px] rounded-full w-full py-2 mt-4">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            plantContainer.appendChild(div);
+        });
+
+        // Hide spinner after content loads
+        spinner.classList.add('hidden');
+    }, 500); // Optional delay (0.5s)
+};
 const  productDetails = async (id) => {
         const url = `https://openapi.programming-hero.com/api/plant/${id}`
         const response = await fetch(url)
